@@ -1,0 +1,75 @@
+
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '2.3.4.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+}
+
+ext {
+    mapstructVersion = "1.3.1.Final"
+    springBootVersion = "2.3.3.RELEASE"
+}
+
+group = 'my-project'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven {
+        url = uri('https://repo.maven.apache.org/maven2')
+    }
+
+    maven {
+        url = uri('https://maven.vaadin.com/vaadin-addons')
+    }
+}
+
+dependencies {
+
+    //vaadin
+    implementation 'com.vaadin:vaadin:14.4.2'
+    implementation 'com.vaadin:vaadin-spring-boot-starter:14.4.2'
+    implementation 'org.vaadin.artur:a-vaadin-helper:1.5.0'
+    implementation 'org.vaadin.artur.exampledata:exampledata:2.3.1'
+
+    //mapstruct
+    implementation "org.mapstruct:mapstruct:${mapstructVersion}"
+    annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
+    testAnnotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
+
+    //spring
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-devtools:${springBootVersion}"
+
+    //db
+    implementation group: 'org.hibernate', name: 'hibernate-core', version: '5.4.21.Final'
+    implementation group: 'org.hibernate.common', name: 'hibernate-commons-annotations', version: '5.1.0.Final'
+    runtimeOnly 'org.postgresql:postgresql'
+
+    //tools
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
+    //test
+    testImplementation 'com.vaadin:vaadin-testbench:14.4.2'
+    testImplementation 'io.github.bonigarcia:webdrivermanager:3.8.1'
+}
+
+group = 'com.example.application'
+version = '1.0-SNAPSHOT'
+description = 'My Project'
+sourceCompatibility = '1.8'
+
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}

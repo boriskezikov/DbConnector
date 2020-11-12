@@ -1,0 +1,25 @@
+server:
+  port: 8079
+vaadin:
+  compatibilityMode: true
+
+spring:
+  response-starter:
+    swagger:
+      apiinfo:
+        title: Db connector draft service
+        contact:
+          name: Boris Kezikov
+          email: boris200898@icloud.com
+
+  datasource:
+    url: "jdbc:postgresql://${DATABASE_HOST:localhost}:${DATABASE_PORT:8451}/${DATABASE_NAME:db_connections_storage}?currentSchema=${DATABASE_SCHEMA:dbconnectionsstorage}"
+    username: ${DATABASE_USERNAME:dbconnectionsstorage_user}
+    password: ${DATABASE_PASSWORD:dbconnectionsstorage_user}
+
+  application:
+    name: db_connector
+  jpa:
+    hibernate:
+      ddl-auto: create
+

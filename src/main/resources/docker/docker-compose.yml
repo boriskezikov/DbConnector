@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+
+  postgres:
+    container_name: postgres_os_notification
+    hostname: postgres_os_notification
+    image: postgres:13.0
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - .././.cicd/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - notifications
+    ports:
+      - 8450:5432
+
+  core-service:
+    container_name: web1-backend-notifications-core
+    build:
+      context: ..
+      dockerfile: .cicd/Dockerfile.core
+      network: notifications
+    image: registry.gitlab.com/vtb-web1/back-notifications-core/back-notifications-core-core:latest
+    ports:
+      - "8400:8400"
+    networks:
+      - notifications
+    environment:
+      DATABASE_HOST: 37.228.117.97
+      DATABASE_PORT: 5432
+      DATABASE_NAME: os_notification_db
+      DATABASE_SCHEMA: osnotification
+      DATABASE_USERNAME: osnotification_user
+      DATABASE_PASSWORD: osnotification_user
+      LIQUIBASE_USERNAME: osnotification
+      LIQUIBASE_PASSWORD: osnotification
+      EXTERNAL_INTEGRATIONMDM: http://integration-mdm-v2.k3-integration.apps.kt-oscp.vtb24.ru/
+      AUDIT_KAFKA_SERVER: 37.228.117.97
+      AUDIT_KAFKA_PORT: 9092
+      AUDIT_SSL_ENABLED: "false"
+      KAFKA_SERVER: 37.228.117.97
+      KAFKA_PORT: 9092
+      KAFKA_CONSUMER_GROUP_ID: os-notification-consumer-group
+      OPENID_URL: http://frkk-keycloak-server-backend.apps.d0-oscp.corp.dev.vtb/
+      OPENID_REALM: admin_console_realm
+      OPENID_CLIENT_ID: admin-console
+      OPENID_CLIENT_SECRET: bc08309b-3dc5-41db-8187-129bb80b7474
+      OPENID_USERNAME: admin_ib_1
+      OPENID_PASSWORD: password
+
+volumes:
+  db-core:
+
+networks:
+  notifications:
+    driver: bridge
+    name: notifications
