@@ -1,5 +1,5 @@
 server:
-  port: 8079
+  port: 8080
 vaadin:
   compatibilityMode: true
 
@@ -17,9 +17,14 @@ spring:
     username: ${DATABASE_USERNAME:dbconnectionsstorage_user}
     password: ${DATABASE_PASSWORD:dbconnectionsstorage_user}
 
-  application:
-    name: db_connector
-  jpa:
-    hibernate:
-      ddl-auto: create
+  liquibase:
+    change-log: 'classpath:changelog/db.changelog-master.yml'
+    user: ${LIQUIBASE_USERNAME:dbconnectionsstorage}
+    password: ${LIQUIBASE_PASSWORD:dbconnectionsstorage}
+
+application:
+  name: db_connector
+  api:
+    version: 1.0
+
 

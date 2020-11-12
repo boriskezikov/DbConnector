@@ -23,14 +23,14 @@ import java.time.LocalDateTime;
 @Setter
 @EqualsAndHashCode(of = "id")
 @Builder
-@Entity(name = "db_connections")
+@Entity(name = "connection_details")
 @NoArgsConstructor
 @AllArgsConstructor
-public class DbConnectionEntity {
+public class ConnectionDetailsEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "db_connection_ids_gen")
-    @SequenceGenerator(name = "db_connection_ids_gen", sequenceName = "db_connection_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "connection_details_ids_gen")
+    @SequenceGenerator(name = "connection_details_ids_gen", sequenceName = "connection_details_id_seq", allocationSize = 1)
     private BigInteger id;
 
     @Column(nullable = false)
@@ -50,6 +50,7 @@ public class DbConnectionEntity {
 
     @Column
     private String password;
+
     @CreationTimestamp
     private LocalDateTime created;
 
