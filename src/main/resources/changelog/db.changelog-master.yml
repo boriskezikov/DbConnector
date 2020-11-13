@@ -19,7 +19,6 @@ databaseChangeLog:
                   type: VARCHAR(255)
                   constraints:
                     nullable: false
-                    unique: true
               - column:
                   name: hostname
                   type: VARCHAR(255)

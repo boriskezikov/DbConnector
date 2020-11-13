@@ -42,11 +42,11 @@ public class ConnectionDetailsController {
 
     private final ConnectionDetailsService connectionDetailsService;
 
-    @Operation(summary = "Create new connection. Returns connection ID")
+    @Operation(summary = "Create new connection.")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public BigInteger createConnectionDetails(@RequestBody @Validated CreateConnectionDetailsDTO detailsDTO) {
-        return connectionDetailsService.createConnectionDetails(detailsDTO);
+    public void createConnectionDetails(@RequestBody @Validated CreateConnectionDetailsDTO detailsDTO) {
+         connectionDetailsService.createConnectionDetails(detailsDTO);
     }
 
     @Operation(summary = "Get connection details by id")

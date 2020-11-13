@@ -8,4 +8,5 @@ import java.math.BigInteger;
 
 @Repository
 public interface ConnectionDetailsRepository extends JpaRepository<ConnectionDetails, BigInteger> {
+
 }

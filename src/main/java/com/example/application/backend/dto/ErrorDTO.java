@@ -12,6 +12,9 @@ public class ErrorDTO {
     @Schema(description = "HTTP status")
     private Integer status;
 
+    @Schema(description = "Error type")
+    private String errorType;
+
     @Schema(description = "Error message")
     private String message;
 
