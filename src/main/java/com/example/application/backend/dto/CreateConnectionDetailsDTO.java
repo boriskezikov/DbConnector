@@ -17,5 +17,6 @@ public class CreateConnectionDetailsDTO {
     private String databaseName;
     private String username;
     private String password;
+    private String schema;
 
 }
