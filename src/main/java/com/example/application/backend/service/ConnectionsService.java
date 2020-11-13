@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import java.math.BigInteger;
+import java.time.LocalDateTime;
 
 import static java.lang.String.format;
 
@@ -31,6 +32,8 @@ public class ConnectionsService {
     public BigInteger createConnection(ConnectionDetails connectionDetails) {
         var connection = Connection.builder()
                 .connectionDetails(connectionDetails)
+                .openTime(LocalDateTime.now())
+                .openedBy()
                 .session(session.getId())
                 .build();
         return connectionsRepository.save(connection).getId();
