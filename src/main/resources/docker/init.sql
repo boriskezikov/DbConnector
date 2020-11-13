@@ -41,4 +41,6 @@ CREATE TABLE dbconnectionsstorage.spring_session_attributes(
 );
 
 GRANT ALL PRIVILEGES ON TABLE  dbconnectionsstorage.spring_session TO dbconnectionsstorage_user;
+GRANT ALL PRIVILEGES ON TABLE  dbconnectionsstorage.spring_session TO dbconnectionsstorage;
 GRANT ALL PRIVILEGES ON TABLE  dbconnectionsstorage.spring_session_attributes TO dbconnectionsstorage_user;
+GRANT ALL PRIVILEGES ON TABLE  dbconnectionsstorage.spring_session_attributes TO dbconnectionsstorage;

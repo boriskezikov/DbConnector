@@ -18,19 +18,14 @@ public class ConnectionsController {
     @Autowired
     private ConnectionsService connectionsService;
 
-    @PostMapping("/open/{id}")
-    public void openConnection(@PathVariable("id") BigInteger id, HttpSession httpSession) {
-        connectionsService.openConnection(id);
-    }
 
     @PostMapping("/destroy")
     public void destroy(HttpSession httpSession) {
-        connectionsService.destroyConnection();
         httpSession.invalidate();
     }
 
     @PostMapping("/test")
-    public void test(@RequestParam String q) {
-        connectionsService.test(q);
+    public void test(@RequestParam String q, @RequestParam String instance) {
+        connectionsService.execute(q,instance);
     }
 }

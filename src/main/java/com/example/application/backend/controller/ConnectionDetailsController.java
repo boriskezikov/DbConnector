@@ -45,14 +45,14 @@ public class ConnectionDetailsController {
     @Operation(summary = "Create new connection. Returns connection ID")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public BigInteger createConnection(@RequestBody @Validated CreateConnectionDetailsDTO connectionDTO) {
-        return connectionDetailsService.createConnection(connectionDTO);
+    public BigInteger createConnectionDetails(@RequestBody @Validated CreateConnectionDetailsDTO detailsDTO) {
+        return connectionDetailsService.createConnectionDetails(detailsDTO);
     }
 
     @Operation(summary = "Get connection details by id")
     @GetMapping("/{id}")
     public GetConnectionDetailsDTO getById(@PathVariable("id")BigInteger id){
-        return connectionDetailsService.getConnectionById(id);
+        return connectionDetailsService.getConnectionDetailsById(id);
     }
 
     @Operation(summary = "Get all connection details")

@@ -25,18 +25,18 @@ public class ConnectionDetailsService {
     private final ConnectionDetailsMapper mapper;
 
     @Transactional
-    public BigInteger createConnection(CreateConnectionDetailsDTO connectionDTO) {
-        log.info("Try to create new connection to {}:{}", connectionDTO.getHostname(),connectionDTO.getPort());
-        var newConnectionDetails  = mapper.createDtoToEntity(connectionDTO);
+    public BigInteger createConnectionDetails(CreateConnectionDetailsDTO detailsDTO) {
+        log.info("Try to create new connection to {}:{}", detailsDTO.getHostname(),detailsDTO.getPort());
+        var newConnectionDetails  = mapper.createDtoToEntity(detailsDTO);
         var details = connectionDetailsRepository.save(newConnectionDetails);
         var con_id = connectionsService.createConnection(details);
         log.info("Created new connection {}", con_id);
         return con_id;
     }
 
-    public GetConnectionDetailsDTO getConnectionById(BigInteger id) {
-        var connection = connectionDetailsRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-        return mapper.entityToGetDto(connection);
+    public GetConnectionDetailsDTO getConnectionDetailsById(BigInteger id) {
+        var details = connectionDetailsRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        return mapper.entityToGetDto(details);
     }
 
     public List<GetConnectionDetailsDTO> findAllConnections() {
