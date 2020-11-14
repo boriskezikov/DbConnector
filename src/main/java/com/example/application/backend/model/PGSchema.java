@@ -20,4 +20,13 @@ public class PGSchema {
     private String default_character_set_name;
     private String sql_path;
 
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    public static class Statistics {
+        private Integer tablesCount;
+    }
+
+
 }

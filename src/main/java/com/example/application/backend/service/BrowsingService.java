@@ -35,34 +35,47 @@ public class BrowsingService {
     private final HttpSession session;
     private final JdbcTemplate jdbcTemplate;
     private final AppSessionRepository appSessionRepository;
-//    private final Map<String, PGRepository<? extends PGObject>> dao;
     private final PGSchemaRepository pgSchemaRepository;
     private final PGTableRepository pgTableRepository;
     private final PGColumnRepository pgColumnRepository;
     private final PreviewRepository previewRepository;
 
-
     public List<PGTable> listTables(BigInteger detailsId, boolean onlyUserTables) {
         establishConnection(detailsId);
-        return pgTableRepository.search(onlyUserTables);
+        return pgTableRepository.listTables(onlyUserTables);
     }
 
-    public List<PGSchema> listSchemas(BigInteger detailsId){
+    public List<PGSchema> listSchemas(BigInteger detailsId) {
         establishConnection(detailsId);
-        return pgSchemaRepository.search();
+        return pgSchemaRepository.listSchemas();
     }
 
-    public List<PGColumn> listColumns(BigInteger detailsId){
+    public List<PGColumn> listColumns(BigInteger detailsId) {
         establishConnection(detailsId);
-        return pgColumnRepository.search();
+        return pgColumnRepository.listColumns();
     }
 
-    public void executeUpdate(String query,BigInteger detailsId) {
+    public List<PGColumn.Statistics> listColumnsStat(String table, BigInteger detailsId) {
+        establishConnection(detailsId);
+        return pgColumnRepository.statistics(table);
+    }
+
+    public List<PGTable.Statistics> listTablesStat(BigInteger detailsId) {
+        establishConnection(detailsId);
+        return pgTableRepository.statistics();
+    }
+
+    public List<PGSchema.Statistics> listSchemasStat(BigInteger detailsId) {
+        establishConnection(detailsId);
+        return pgSchemaRepository.statistics();
+    }
+
+    public void executeUpdate(String query, BigInteger detailsId) {
         establishConnection(detailsId);
         jdbcTemplate.update(query);
     }
 
-    public List<Map<String, Object>> previewTable(String table, BigInteger detailsId){
+    public List<Map<String, Object>> previewTable(String table, BigInteger detailsId) {
         establishConnection(detailsId);
         return previewRepository.search(table);
     }

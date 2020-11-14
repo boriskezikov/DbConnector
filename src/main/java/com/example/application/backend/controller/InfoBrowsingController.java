@@ -11,6 +11,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,13 +45,28 @@ public class InfoBrowsingController {
         return browsingService.listSchemas(detailsId);
     }
 
-    @Operation(summary = "List existing schemas for current session and connection")
+    @Operation(summary = "Stat for schemas")
+    @GetMapping("/schema/stat")
+    @ResponseStatus(HttpStatus.OK)
+    public List<PGSchema.Statistics> listSchemaStat(@RequestParam BigInteger detailsId) {
+        return browsingService.listSchemasStat(detailsId);
+    }
+
+    @Operation(summary = "List existing tables for current session and connection")
     @Parameter(name = "onlyUserTables", description = "If true - returns only user created tables, else returns all")
     @GetMapping("/tables")
     @ResponseStatus(HttpStatus.OK)
-    public List<PGTable> loadAvailableTables(@RequestParam(defaultValue = "false") boolean onlyUserTables,
+    public Page<PGTable> loadAvailableTables(Pageable pageable, @RequestParam(defaultValue = "false") boolean onlyUserTables,
                                              @RequestParam BigInteger detailsId) {
-        return browsingService.listTables(detailsId, onlyUserTables);
+        var tb = browsingService.listTables(detailsId, onlyUserTables);
+        return new PageImpl<>(tb, pageable, tb.size());
+    }
+
+    @Operation(summary = "Stat for tables")
+    @GetMapping("/tables/stat")
+    @ResponseStatus(HttpStatus.OK)
+    public List<PGTable.Statistics> listTablesStat(@RequestParam BigInteger detailsId) {
+        return browsingService.listTablesStat(detailsId);
     }
 
     @Operation(summary = "List existing columns for current session and connection")
@@ -59,10 +77,18 @@ public class InfoBrowsingController {
         return browsingService.listColumns(detailsId);
     }
 
+    @Operation(summary = "Stat for columns")
+    @GetMapping("/columns/stat")
+    @ResponseStatus(HttpStatus.OK)
+    public List<PGColumn.Statistics> listColumnsStat(@RequestParam(required = false) String tableName, @RequestParam BigInteger detailsId) {
+        return browsingService.listColumnsStat(tableName, detailsId);
+    }
+
     @Operation(summary = "Preview for data stored in specified table")
     @GetMapping("/preview")
     @ResponseStatus(HttpStatus.OK)
     public List<Map<String, Object>> previewTable(@RequestParam String tableName, @RequestParam BigInteger detailsId) {
         return browsingService.previewTable(tableName, detailsId);
     }
+
 }

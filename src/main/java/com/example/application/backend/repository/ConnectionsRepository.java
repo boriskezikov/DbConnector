@@ -11,10 +11,12 @@ import java.util.Optional;
 @Repository
 public interface ConnectionsRepository extends JpaRepository<Connection, BigInteger> {
 
-    Optional<Connection> findBySessionAndConnectionDetails_DbInstanceName(String session, String instanceName);
     boolean existsBySessionAndConnectionDetails_DbInstanceName(String session, String instanceName);
+
     List<Connection> findAllBySession(String session);
+
     Optional<Connection> findBySessionAndConnectionDetailsId(String session, BigInteger id);
+
     void deleteAllBySession(String session);
 
 }

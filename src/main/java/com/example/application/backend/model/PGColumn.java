@@ -67,4 +67,16 @@ public class PGColumn {
     private String grantee;
     private String privilege_type;
     private String is_grantable;
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    public static class Statistics {
+        private Integer min;
+        private Integer max;
+        private Integer avg;
+        private Integer median;
+    }
+
 }

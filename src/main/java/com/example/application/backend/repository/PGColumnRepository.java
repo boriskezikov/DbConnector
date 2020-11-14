@@ -31,7 +31,11 @@ public class PGColumnRepository {
             "         left join information_schema.column_domain_usage as d\n" +
             "              on k.table_schema = d.table_schema and k.table_name = d.table_name and k.column_name = d.column_name;";
 
-    public List<PGColumn> search() {
+    public List<PGColumn> listColumns() {
         return jdbcTemplate.query(SELECT_SCHEMAS_SQL, new BeanPropertyRowMapper<>(PGColumn.class));
+    }
+
+    public List<PGColumn.Statistics> statistics(String table){
+        return null;
     }
 }

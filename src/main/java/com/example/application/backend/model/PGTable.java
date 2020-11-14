@@ -6,12 +6,15 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class PGTable {
 
+    private List<PGColumn> columns;
     private String table_catalog;
     private String table_schema;
     private String table_name;
@@ -61,5 +64,15 @@ public class PGTable {
     private Boolean hasrules;
     private Boolean hastriggers;
     private Boolean rowsecurity;
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    public static class Statistics {
+        private Integer recordsCount;
+        private Integer attributesCount;
+    }
+
 
 }
