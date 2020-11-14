@@ -1,28 +1,24 @@
 package com.example.application.backend.mapper;
 
-import com.example.application.backend.domain.ConnectionDetailsEntity;
+import com.example.application.backend.domain.ConnectionDetails;
 import com.example.application.backend.dto.CreateConnectionDetailsDTO;
 import com.example.application.backend.dto.GetConnectionDetailsDTO;
+import com.example.application.backend.dto.UpdateConnectionDetailsDTO;
 import com.example.application.backend.service.ConnectionDetailsService;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 
-import java.util.List;
-
-@Mapper(uses = {ConnectionDetailsService.class}, componentModel = "spring")
+@Mapper(uses = {ConnectionDetailsService.class}, componentModel = "spring", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface ConnectionDetailsMapper {
 
     @Mapping(target = "created", ignore = true)
     @Mapping(target = "updated", ignore = true)
-    ConnectionDetailsEntity createDtoToEntity(CreateConnectionDetailsDTO source);
+    ConnectionDetails createDtoToEntity(CreateConnectionDetailsDTO source);
 
-    CreateConnectionDetailsDTO entityToCreateDto(ConnectionDetailsEntity source);
+    GetConnectionDetailsDTO entityToGetDto(ConnectionDetails source);
 
-    @Mapping(target = "created", ignore = true)
-    @Mapping(target = "updated", ignore = true)
-    ConnectionDetailsEntity getDtoToEntity(GetConnectionDetailsDTO source);
-
-    GetConnectionDetailsDTO entityToGetDto(ConnectionDetailsEntity source);
-
+    void updateEntityFromDto(UpdateConnectionDetailsDTO source, @MappingTarget ConnectionDetails target);
 
 }

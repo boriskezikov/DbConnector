@@ -1,7 +1,7 @@
 databaseChangeLog:
 
   - changeSet:
-      id: create "connections" table
+      id: create "connection details" table
       author: Boris Kezikov
       changes:
         - createTable:
@@ -35,6 +35,11 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
+                  name: schema
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
                   name: username
                   type: VARCHAR(50)
                   constraints:
@@ -54,4 +59,43 @@ databaseChangeLog:
                   type: TIMESTAMP
                   constraints:
                     nullable: false
+        - addDefaultValue:
+            tableName: connection_details
+            columnName: schema
+            defaultValue: public
+
+  - changeSet:
+      id: create "connections" table
+      author: Boris Kezikov
+      changes:
+        - createTable:
+            tableName: connections
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: connection_details_id
+                  type: BIGSERIAL
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_connection_details_id
+                    references: connection_details(id)
+              - column:
+                  name: open_time
+                  type: TIMESTAMP
+              - column:
+                  name: opened_by
+                  type: VARCHAR(100)
+              - column:
+                  name: session
+                  type: VARCHAR(100)
+                  constraints:
+                    nullable: false
+
+
 

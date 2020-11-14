@@ -1,27 +1,32 @@
 server:
   port: 8080
-vaadin:
-  compatibilityMode: true
-
 spring:
   response-starter:
     swagger:
       apiinfo:
-        title: Db connector draft service
+        title: Db connector service
         contact:
           name: Boris Kezikov
           email: boris200898@icloud.com
-
+  session:
+    jdbc:
+      table-name: SPRING_SESSION
+    store-type: jdbc
   datasource:
     url: "jdbc:postgresql://${DATABASE_HOST:localhost}:${DATABASE_PORT:8451}/${DATABASE_NAME:db_connections_storage}?currentSchema=${DATABASE_SCHEMA:dbconnectionsstorage}"
     username: ${DATABASE_USERNAME:dbconnectionsstorage_user}
     password: ${DATABASE_PASSWORD:dbconnectionsstorage_user}
-
+    hikari:
+      connection-timeout: 50000
+      minimum-idle: 10
+      maximum-pool-size: 100
+      idle-timeout: 10000
+      max-lifetime: 1000
+      auto-commit: true
   liquibase:
     change-log: 'classpath:changelog/db.changelog-master.yml'
     user: ${LIQUIBASE_USERNAME:dbconnectionsstorage}
     password: ${LIQUIBASE_PASSWORD:dbconnectionsstorage}
-
 application:
   name: db_connector
   api:
