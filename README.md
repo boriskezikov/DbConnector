@@ -32,3 +32,11 @@ There are 2 ways to start application on local machine:
       - Open localhost:8080/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config#
    
 Happy playing:)
+
+
+### P.S.
+Using heroku and trying to play with its embedded postgres next error may appear :
+
+  - "message": "Failed to initialize pool: FATAL: too many connections for role \"qjrfdcsfpwiwzo\""
+  
+Heroku allows only limited number of connection. For full experience its better to run app locally.
