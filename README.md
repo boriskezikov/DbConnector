@@ -1,44 +1,34 @@
-# My Project
+# DB Connector
 
-This is an example project that can be used as a starting point to create your own Vaadin application with Spring Boot.
-It contains all the necessary configuration and some placeholder files to get you started.
+This is an application providing ability to connect any database and fetch its data. Application hosted on Heroku and could be easy tested.
 
-The project is a standard Maven project, so you can import it to your IDE of choice. [Read more how to set up a development environment](https://vaadin.com/docs/v14/flow/installing/installing-overview.html) for Vaadin projects (Windows, Linux, macOS). 
+## Heroku database credentials 
 
-This project was created from https://start.vaadin.com.
+- Host: ec2-34-237-247-76.compute-1.amazonaws.com
+- Database: d8aen9s893c7dv
+- User: qjrfdcsfpwiwzo
+- Port: 5432
+- Password: 01ab19bc662855a6d69817fc9406c4c0b50d9224590ac4d35364bfde6aed88f1
+- URI: postgres://qjrfdcsfpwiwzo:01ab19bc662855a6d69817fc9406c4c0b50d9224590ac4d35364bfde6aed88f1@ec2-34-237-247-76.compute-1.amazonaws.com:5432/d8aen9s893c7dv
 
-## Running the Application
-There are two ways to run the application:  
- - To run from the command line, use `mvn` and open [http://localhost:8080](http://localhost:8080) in your browser.
- - Another way is to to run the `Application` class directly from your IDE.
+## Swagger
+Application provides swagger interface for convinient interaction.
+https://db-connector-app.herokuapp.com/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config#/
 
-#### Intellij IDEA
-- On the right side of the window, select Maven --> Plugins--> `spring-boot` --> `spring-boot:run` goal
-- Optionally, you can disable tests by clicking on a `Skip Tests mode` blue button.
+## Running the Application Locally
+There are 2 ways to start application on local machine:
 
-Clicking on the green run button will start the application.
-
-After the application has started, you can view your it at http://localhost:8080/ in your browser.
-
-#### Eclipse
-- Right click on a project folder and select `Run As` --> `Maven build..` . After that a configuration window is opened.
-- In the window set the value of the **Goals** field to `spring-boot:run` 
-- You can optionally select `Skip tests` checkbox
-- All the other settings can be left to default
-
-Once configurations are set clicking `Run` will start the application
-
-
-## Project structure
-
-- `MainView.java` in `src/main/java` contains the navigation setup. It uses [App Layout](https://vaadin.com/components/vaadin-app-layout).
-- `views` package in `src/main/java` contains the server-side Java views of your application.
-- `views` folder in `frontend/src/` contains the client-side JavaScript views of your application.
-
-## What next?
-
-[vaadin.com](https://vaadin.com) has lots of material to help you get you started:
-
-- Follow the tutorials in [vaadin.com/tutorials](https://vaadin.com/tutorials). Especially [vaadin.com/tutorials/getting-started-with-flow](https://vaadin.com/tutorials/getting-started-with-flow) is good for getting a grasp of the basic Vaadin concepts.
-- Read the documentation in [vaadin.com/docs](https://vaadin.com/docs).
-- For a bigger Vaadin application example, check out the Full Stack App starter from [vaadin.com/start](https://vaadin.com/start).
+   1) #### Using docker. 
+   
+      - Navigate to ./cicd folder and run docker-compose.yml file. Application and database will be started in docker contaiters. 
+      
+   2) #### Build and run manually.
+   
+      - Navigate to /.cicd/db folder. Run cmd script if you are using Windows OS or call commands from file manually if Unix OS. If docker cant be started for you, its needed to create database manually and then specify correct credentials and host in application.yml.
+      
+      - Run Spring boot app with dev profile. ( to use default creds for local development)
+   
+ 
+      - Open localhost:8080/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config#
+   
+Happy playing:)
