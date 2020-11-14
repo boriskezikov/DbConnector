@@ -15,5 +15,5 @@ CREATE TABLE spring_session_attributes
     attribute_name     VARCHAR(200) NOT NULL,
     attribute_bytes    bytea        not null,
     constraint spring_session_attributes_pk primary key (session_primary_id, attribute_name),
-    constraint spring_session_attributes_fk foreign key (session_primary_id) references dbconnectionsstorage.spring_session (PRIMARY_ID)
+    constraint spring_session_attributes_fk foreign key (session_primary_id) references spring_session (PRIMARY_ID)
 );

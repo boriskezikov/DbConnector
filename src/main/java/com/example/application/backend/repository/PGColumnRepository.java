@@ -37,7 +37,7 @@ public class PGColumnRepository {
             String sql = format(SELECT_COLUMN_STATISTICS, column, column, column, table);
             return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(PGColumn.Statistics.class));
         } else {
-            throw new RuntimeException(format("Table %s has %s datatype. Countable calculation can not be performed!", table, type));
+            throw new RuntimeException(format("Table '%s' has '%s' datatype. Countable calculation can not be performed!", table, type));
         }
     }
 }

@@ -14,7 +14,7 @@ services:
     networks:
       - db_connector_net
     ports:
-      - 8451:5432
+      - 5432:5432
 
   db-connector:
     container_name: backend-db-connector
@@ -23,8 +23,7 @@ services:
       dockerfile: .cicd/Dockerfile.app
       network: db_connector_net
     ports:
-      - "8080:8401"
-      - "8410:9000"
+      - "8080:8080"
     networks:
       - db_connector_net
     environment:
