@@ -13,9 +13,9 @@ spring:
       table-name: SPRING_SESSION
     store-type: jdbc
   datasource:
-    url: "jdbc:postgresql://${DATABASE_HOST:ec2-34-237-247-76.compute-1.amazonaws.com}:${DATABASE_PORT:5432}/${DATABASE_NAME:d8aen9s893c7dv}?currentSchema=${DATABASE_SCHEMA:public}"
-    username: ${DATABASE_USERNAME:qjrfdcsfpwiwzo}
-    password: ${DATABASE_PASSWORD:01ab19bc662855a6d69817fc9406c4c0b50d9224590ac4d35364bfde6aed88f1}
+    url: "jdbc:postgresql://${DATABASE_HOST:localhost}:${DATABASE_PORT:8451}/${DATABASE_NAME:db_connections_storage}?currentSchema=${DATABASE_SCHEMA:dbconnectionsstorage}"
+    username: ${DATABASE_USERNAME:dbconnectionsstorage_user}
+    password: ${DATABASE_PASSWORD:dbconnectionsstorage_user}
     hikari:
       connection-timeout: 50000
       minimum-idle: 10
@@ -25,8 +25,8 @@ spring:
       auto-commit: true
   liquibase:
     change-log: 'classpath:changelog/db.changelog-master.yml'
-    user: ${LIQUIBASE_USERNAME:qjrfdcsfpwiwzo}
-    password: ${LIQUIBASE_PASSWORD:01ab19bc662855a6d69817fc9406c4c0b50d9224590ac4d35364bfde6aed88f1}
+    user: ${LIQUIBASE_USERNAME:dbconnectionsstorage}
+    password: ${LIQUIBASE_PASSWORD:dbconnectionsstorage}
 application:
   name: db_connector
   api:
