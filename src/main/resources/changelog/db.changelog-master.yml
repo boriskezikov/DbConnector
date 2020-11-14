@@ -92,13 +92,10 @@ databaseChangeLog:
                   name: opened_by
                   type: VARCHAR(100)
               - column:
-                  name: open
-                  type: BOOL
-                  constraints:
-                    nullable: false
-              - column:
                   name: session
                   type: VARCHAR(100)
                   constraints:
                     nullable: false
+
+
 

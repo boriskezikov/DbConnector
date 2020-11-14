@@ -35,25 +35,18 @@ public class ConnectionDetails {
     @SequenceGenerator(name = "connection_details_ids_gen", sequenceName = "connection_details_id_seq", allocationSize = 1)
     private BigInteger id;
 
-    @Column(nullable = false)
     private String dbInstanceName;
 
-    @Column(nullable = false)
     private String hostname;
 
-    @Column(nullable = false)
     private Integer port;
 
-    @Column(nullable = false)
     private String databaseName;
 
-    @Column
     private String schema;
 
-    @Column
     private String username;
 
-    @Column
     private String password;
 
     @CreationTimestamp
@@ -61,6 +54,5 @@ public class ConnectionDetails {
 
     @UpdateTimestamp
     private LocalDateTime updated;
-
 
 }

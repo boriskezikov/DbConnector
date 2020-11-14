@@ -1,7 +1,7 @@
 package com.example.application.backend.configuration;
 
 
-import com.example.application.backend.dto.ErrorDTO;
+import com.example.application.backend.dto.ApiErrorDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.persistence.EntityNotFoundException;
+import java.io.IOException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -16,15 +17,22 @@ public class GlobalExceptionHandler {
     @ResponseBody
     @ExceptionHandler(value = {Exception.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    protected ErrorDTO handleApiException(Exception ex) {
-        return new ErrorDTO(500, ex.getClass().getName(), ex.getMessage());
+    protected ApiErrorDTO handleApiException(Exception ex) {
+        return new ApiErrorDTO(500, ex.getClass().getName(), ex.getMessage());
     }
 
     @ResponseBody
     @ExceptionHandler(value = {EntityNotFoundException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    protected ErrorDTO handleApiException(EntityNotFoundException ex) {
-        return new ErrorDTO(404, ex.getClass().getName(), ex.getMessage());
+    protected ApiErrorDTO handleApiException(EntityNotFoundException ex) {
+        return new ApiErrorDTO(404, ex.getClass().getName(), ex.getMessage());
+    }
+
+    @ResponseBody
+    @ExceptionHandler(value = {IOException.class})
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    protected ApiErrorDTO handleApiException(IOException ex) {
+        return new ApiErrorDTO(400, ex.getClass().getName(), ex.getMessage());
     }
 
 }

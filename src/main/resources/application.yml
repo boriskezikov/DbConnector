@@ -1,7 +1,5 @@
 server:
   port: 8080
-
-
 spring:
   response-starter:
     swagger:
@@ -12,28 +10,23 @@ spring:
           email: boris200898@icloud.com
   session:
     jdbc:
-#      initialize-schema: always
       table-name: SPRING_SESSION
     store-type: jdbc
-
   datasource:
     url: "jdbc:postgresql://${DATABASE_HOST:localhost}:${DATABASE_PORT:8451}/${DATABASE_NAME:db_connections_storage}?currentSchema=${DATABASE_SCHEMA:dbconnectionsstorage}"
     username: ${DATABASE_USERNAME:dbconnectionsstorage_user}
     password: ${DATABASE_PASSWORD:dbconnectionsstorage_user}
-
     hikari:
-      connection-timeout: 20000 #maximum number of milliseconds that a client will wait for a connection
-      minimum-idle: 10 #minimum number of idle connections maintained by HikariCP in a connection pool
-      maximum-pool-size: 10 #maximum pool size
-      idle-timeout: 10000 #maximum idle time for connection
-      max-lifetime: 1000 # maximum lifetime in milliseconds of a connection in the pool after it is closed.
-      auto-commit: true  #default auto-commit behavior.
-
+      connection-timeout: 50000
+      minimum-idle: 10
+      maximum-pool-size: 100
+      idle-timeout: 10000
+      max-lifetime: 1000
+      auto-commit: true
   liquibase:
     change-log: 'classpath:changelog/db.changelog-master.yml'
     user: ${LIQUIBASE_USERNAME:dbconnectionsstorage}
     password: ${LIQUIBASE_PASSWORD:dbconnectionsstorage}
-
 application:
   name: db_connector
   api:

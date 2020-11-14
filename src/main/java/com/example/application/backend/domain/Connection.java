@@ -7,7 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,9 +34,7 @@ public class Connection {
 
     private LocalDateTime openTime;
 
-    private boolean open;
-
-    @OneToOne
+    @OneToOne(orphanRemoval = true)
     @JoinColumn(name = "connection_details_id", nullable = false)
     private ConnectionDetails connectionDetails;
 

@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 @Schema(description = "Error")
-public class ErrorDTO {
+public class ApiErrorDTO {
 
     @Schema(description = "HTTP status")
     private Integer status;
