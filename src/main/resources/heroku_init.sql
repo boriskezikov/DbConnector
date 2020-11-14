@@ -1,4 +1,4 @@
-CREATE TABLE dbconnectionsstorage.spring_session
+CREATE TABLE spring_session
 (
     PRIMARY_ID            CHAR(36) NOT NULL,
     SESSION_ID            CHAR(36) NOT NULL,
@@ -9,7 +9,7 @@ CREATE TABLE dbconnectionsstorage.spring_session
     PRINCIPAL_NAME        VARCHAR(100),
     CONSTRAINT spring_session_pk PRIMARY KEY (PRIMARY_ID)
 );
-CREATE TABLE dbconnectionsstorage.spring_session_attributes
+CREATE TABLE spring_session_attributes
 (
     session_primary_id CHAR(36)     not null,
     attribute_name     VARCHAR(200) NOT NULL,
