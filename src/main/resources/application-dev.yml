@@ -13,7 +13,7 @@ spring:
       table-name: SPRING_SESSION
     store-type: jdbc
   datasource:
-    url: "jdbc:postgresql://${DATABASE_HOST:localhost}:${DATABASE_PORT:8451}/${DATABASE_NAME:db_connections_storage}?currentSchema=${DATABASE_SCHEMA:dbconnectionsstorage}"
+    url: "jdbc:postgresql://${DATABASE_HOST:localhost}:${DATABASE_PORT:5432}/${DATABASE_NAME:db_connections_storage}?currentSchema=${DATABASE_SCHEMA:dbconnectionsstorage}"
     username: ${DATABASE_USERNAME:dbconnectionsstorage_user}
     password: ${DATABASE_PASSWORD:dbconnectionsstorage_user}
     hikari:
