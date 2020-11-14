@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class PGColumn {
 
+    public String is_updatable;
     private String constraint_catalog;
     private String constraint_schema;
     private String constraint_name;
@@ -62,7 +63,6 @@ public class PGColumn {
     private String identity_cycle;
     private String is_generated;
     private String generation_expression;
-    public String is_updatable;
     private String grantor;
     private String grantee;
     private String privilege_type;

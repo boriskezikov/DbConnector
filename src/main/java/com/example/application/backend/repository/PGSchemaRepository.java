@@ -23,7 +23,7 @@ public class PGSchemaRepository {
         return jdbcTemplate.query(SELECT_SCHEMAS_SQL, new BeanPropertyRowMapper<>(PGSchema.class));
     }
 
-    public List<PGSchema.Statistics> statistics(){
+    public List<PGSchema.Statistics> statistics() {
         return null;
     }
 }

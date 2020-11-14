@@ -28,13 +28,13 @@ public class PGTableRepository {
             "where t.table_schema not in ('pg_catalog', 'information_schema')" +
             "limit ? offset ?;";
 
-    private static final String SELECT_USER_TABLES_COUNT_ROWS ="select count(1)\n" +
+    private static final String SELECT_USER_TABLES_COUNT_ROWS = "select count(1)\n" +
             "from information_schema.tables as t\n" +
             "         join pg_stat_user_tables as st on st.schemaname = t.table_schema and st.relname = t.table_name\n" +
             "         join pg_statio_user_tables as sto on sto.schemaname = t.table_schema and sto.relname = t.table_name\n" +
             "where t.table_schema not in ('pg_catalog', 'information_schema');";
 
-    private static final String SELECT_ALL_TABLES_COUNT_ROWS ="select count(1)\n" +
+    private static final String SELECT_ALL_TABLES_COUNT_ROWS = "select count(1)\n" +
             "from information_schema.tables as t\n" +
             "         join pg_stat_user_tables as st on st.schemaname = t.table_schema and st.relname = t.table_name\n" +
             "         join pg_statio_user_tables as sto on sto.schemaname = t.table_schema and sto.relname = t.table_name;";
@@ -51,11 +51,10 @@ public class PGTableRepository {
         List<PGTable> tables;
         if (onlyUserTables) {
             count = jdbcTemplate.queryForObject(SELECT_USER_TABLES_COUNT_ROWS, Integer.class);
-            tables = jdbcTemplate.query(SELECT_USER_TABLES_SQL, new Object[]{pageable.getPageSize(), pageable.getOffset()},new BeanPropertyRowMapper<>(PGTable.class));
-        }
-        else {
+            tables = jdbcTemplate.query(SELECT_USER_TABLES_SQL, new Object[]{pageable.getPageSize(), pageable.getOffset()}, new BeanPropertyRowMapper<>(PGTable.class));
+        } else {
             count = jdbcTemplate.queryForObject(SELECT_ALL_TABLES_COUNT_ROWS, Integer.class);
-            tables = jdbcTemplate.query(SELECT_ALL_TABLES_SQL, new Object[]{pageable.getPageSize(), pageable.getOffset()},new BeanPropertyRowMapper<>(PGTable.class));
+            tables = jdbcTemplate.query(SELECT_ALL_TABLES_SQL, new Object[]{pageable.getPageSize(), pageable.getOffset()}, new BeanPropertyRowMapper<>(PGTable.class));
         }
         List<PGColumn> res = jdbcTemplate.query(SELECT_COLS_FOR_TABLE_SQL, new BeanPropertyRowMapper<>(PGColumn.class));
         tables.forEach(table -> {
