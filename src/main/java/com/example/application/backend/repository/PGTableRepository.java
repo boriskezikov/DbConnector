@@ -50,11 +50,11 @@ public class PGTableRepository {
         int count;
         List<PGTable> tables;
         if (onlyUserTables) {
-            count = jdbcTemplate.queryForObject(SELECT_USER_TABLES_COUNT_ROWS, (rs, rowNum) -> rs.getInt(1));
+            count = jdbcTemplate.queryForObject(SELECT_USER_TABLES_COUNT_ROWS, Integer.class);
             tables = jdbcTemplate.query(SELECT_USER_TABLES_SQL, new Object[]{pageable.getPageSize(), pageable.getOffset()},new BeanPropertyRowMapper<>(PGTable.class));
         }
         else {
-            count = jdbcTemplate.queryForObject(SELECT_ALL_TABLES_COUNT_ROWS, (rs, rowNum) -> rs.getInt(1));
+            count = jdbcTemplate.queryForObject(SELECT_ALL_TABLES_COUNT_ROWS, Integer.class);
             tables = jdbcTemplate.query(SELECT_ALL_TABLES_SQL, new Object[]{pageable.getPageSize(), pageable.getOffset()},new BeanPropertyRowMapper<>(PGTable.class));
         }
         List<PGColumn> res = jdbcTemplate.query(SELECT_COLS_FOR_TABLE_SQL, new BeanPropertyRowMapper<>(PGColumn.class));

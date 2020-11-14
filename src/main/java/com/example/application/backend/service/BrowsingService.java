@@ -15,6 +15,8 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
@@ -40,9 +42,9 @@ public class BrowsingService {
     private final PGColumnRepository pgColumnRepository;
     private final PreviewRepository previewRepository;
 
-    public List<PGTable> listTables(BigInteger detailsId, boolean onlyUserTables) {
+    public Page<PGTable> listTables(BigInteger detailsId, boolean onlyUserTables, Pageable pageable) {
         establishConnection(detailsId);
-        return pgTableRepository.listTables(onlyUserTables);
+        return pgTableRepository.listTables(onlyUserTables, pageable);
     }
 
     public List<PGSchema> listSchemas(BigInteger detailsId) {
@@ -50,9 +52,9 @@ public class BrowsingService {
         return pgSchemaRepository.listSchemas();
     }
 
-    public List<PGColumn> listColumns(BigInteger detailsId) {
+    public Page<PGColumn> listColumns(BigInteger detailsId, Pageable pageable) {
         establishConnection(detailsId);
-        return pgColumnRepository.listColumns();
+        return pgColumnRepository.listColumns(pageable);
     }
 
     public List<PGColumn.Statistics> listColumnsStat(String table, BigInteger detailsId) {

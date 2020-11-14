@@ -67,7 +67,7 @@ public class ConnectionDetailsController {
     @Parameter(name = "adminMode", description = "If true allows to select all connection details regardless of session," +
             "if false selects details for current session only")
     @GetMapping
-    public List<GetConnectionDetailsDTO> findAll(@RequestParam boolean adminMode) {
+    public List<GetConnectionDetailsDTO> findAll(@RequestParam(defaultValue = "false") boolean adminMode) {
         return connectionDetailsService.findAllConnections(adminMode);
     }
 
