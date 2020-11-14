@@ -20,6 +20,7 @@ CREATE TABLE test_schema.TEST_TABLE
 (
     field CHAR(36) NOT NULL,
     id    BIGINT   NOT NULL,
+    age     INT,
     CONSTRAINT spring_session_pk PRIMARY KEY (id)
 );
 GRANT ALL PRIVILEGES ON TABLE test_schema.TEST_TABLE TO test1;

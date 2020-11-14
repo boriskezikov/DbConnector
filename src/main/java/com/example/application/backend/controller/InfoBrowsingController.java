@@ -45,21 +45,13 @@ public class InfoBrowsingController {
         return browsingService.listSchemas(detailsId);
     }
 
-    @Operation(summary = "Stat for schemas")
-    @Parameter(name = "detailsId", description = "Connection details ID")
-    @GetMapping("/schema/stat")
-    @ResponseStatus(HttpStatus.OK)
-    public List<PGSchema.Statistics> listSchemaStat(@RequestParam BigInteger detailsId) {
-        return browsingService.listSchemasStat(detailsId);
-    }
-
     @Operation(summary = "List existing tables for current session and connection")
     @Parameter(name = "onlyUserTables", description = "If true - returns only user created tables, else returns all")
     @Parameter(name = "detailsId", description = "Connection details ID")
     @GetMapping("/tables")
     @ResponseStatus(HttpStatus.OK)
     public Page<PGTable> loadAvailableTables(Pageable pageable,
-                                             @RequestParam(defaultValue = "false") boolean onlyUserTables,
+                                             @RequestParam(defaultValue = "true") boolean onlyUserTables,
                                              @RequestParam BigInteger detailsId) {
         return browsingService.listTables(detailsId, onlyUserTables, pageable);
     }
@@ -68,8 +60,8 @@ public class InfoBrowsingController {
     @Parameter(name = "detailsId", description = "Connection details ID")
     @GetMapping("/tables/stat")
     @ResponseStatus(HttpStatus.OK)
-    public List<PGTable.Statistics> listTablesStat(@RequestParam BigInteger detailsId) {
-        return browsingService.listTablesStat(detailsId);
+    public PGTable.Statistics listTablesStat(@RequestParam BigInteger detailsId, @RequestParam String table) {
+        return browsingService.listTablesStat(detailsId, table);
     }
 
     @Operation(summary = "List existing columns for current session and connection")
@@ -82,11 +74,12 @@ public class InfoBrowsingController {
 
     @Operation(summary = "Stat for columns")
     @Parameter(name = "detailsId", description = "Connection details ID")
-    @Parameter(name = "tableName", description = "Table name for fethcing statistics")
+    @Parameter(name = "tableName", description = "Table name for fetching statistics")
+    @Parameter(name = "columnName", description = "Column name for fetching statistics")
     @GetMapping("/columns/stat")
     @ResponseStatus(HttpStatus.OK)
-    public List<PGColumn.Statistics> listColumnsStat(@RequestParam(required = false) String tableName, @RequestParam BigInteger detailsId) {
-        return browsingService.listColumnsStat(tableName, detailsId);
+    public PGColumn.Statistics listColumnsStat(@RequestParam String tableName, @RequestParam String columnName, @RequestParam BigInteger detailsId) {
+        return browsingService.listColumnsStat(columnName, tableName, detailsId);
     }
 
     @Operation(summary = "Preview for data stored in specified table")

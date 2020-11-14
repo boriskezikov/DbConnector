@@ -10,8 +10,14 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import static com.example.application.backend.utils.SQLConstants.IS_COLUMN_NUMERIC_SQL;
+import static com.example.application.backend.utils.SQLConstants.SELECT_COLUMNS_SQL;
+import static com.example.application.backend.utils.SQLConstants.SELECT_COLUMN_STATISTICS;
+import static com.example.application.backend.utils.SQLConstants.SELECT_ROWS_COUNT_SQL;
+import static com.example.application.backend.utils.SQLConstants.pgCountableDataTypes;
+import static java.lang.String.format;
 
+@SuppressWarnings("ConstantConditions")
 @Slf4j
 @Repository(value = "PGColumn")
 @RequiredArgsConstructor
@@ -19,34 +25,19 @@ public class PGColumnRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
-    private static final String SELECT_SCHEMAS_SQL = "" +
-            "select * from information_schema.table_constraints as cs\n" +
-            "         join information_schema.key_column_usage as k on cs.table_name = k.table_name and cs.constraint_catalog = k.constraint_catalog\n" +
-            "and cs.constraint_schema = k.constraint_schema " +
-            "and cs.constraint_name = k.constraint_name\n" +
-            "         join information_schema.columns as col on k.table_name = col.table_name and k.table_schema = col.table_schema and k.column_name = col.column_name\n" +
-            "         join information_schema.column_privileges as col_p on k.table_name = col_p.table_name and k.column_name = col_p.column_name\n" +
-            "and k.table_schema = col_p.table_schema\n" +
-            "         left join information_schema.column_domain_usage as d on k.table_schema = d.table_schema and k.table_name = d.table_name and k.column_name = d.column_name\n" +
-            " limit ? offset ? ;";
-
-    private static final String SELECT_ROWS_COUNT_SQL = "" +
-            "select count(1)  from information_schema.table_constraints as cs\n" +
-            "         join information_schema.key_column_usage as k on cs.table_name = k.table_name and cs.constraint_catalog = k.constraint_catalog\n" +
-            "and cs.constraint_schema = k.constraint_schema " +
-            "and cs.constraint_name = k.constraint_name\n" +
-            "         join information_schema.columns as col on k.table_name = col.table_name and k.table_schema = col.table_schema and k.column_name = col.column_name\n" +
-            "         join information_schema.column_privileges as col_p on k.table_name = col_p.table_name and k.column_name = col_p.column_name\n" +
-            "and k.table_schema = col_p.table_schema\n" +
-            "         left join information_schema.column_domain_usage as d on k.table_schema = d.table_schema and k.table_name = d.table_name and k.column_name = d.column_name ;";
-
     public Page<PGColumn> listColumns(Pageable pageable) {
-        int count = jdbcTemplate.queryForObject(SELECT_ROWS_COUNT_SQL, Integer.class);
-        var cols = jdbcTemplate.query(SELECT_SCHEMAS_SQL, new Object[]{pageable.getPageSize(), pageable.getOffset()}, new BeanPropertyRowMapper<>(PGColumn.class));
+        Integer count = jdbcTemplate.queryForObject(SELECT_ROWS_COUNT_SQL, Integer.class);
+        var cols = jdbcTemplate.query(SELECT_COLUMNS_SQL, new Object[]{pageable.getPageSize(), pageable.getOffset()}, new BeanPropertyRowMapper<>(PGColumn.class));
         return new PageImpl<>(cols, pageable, count);
     }
 
-    public List<PGColumn.Statistics> statistics(String table) {
-        return null;
+    public PGColumn.Statistics statistics(String table, String schema, String column) {
+        String type = jdbcTemplate.queryForObject(IS_COLUMN_NUMERIC_SQL, new Object[]{schema, table, column}, String.class);
+        if (pgCountableDataTypes.contains(type)) {
+            String sql = format(SELECT_COLUMN_STATISTICS, column, column, column, table);
+            return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(PGColumn.Statistics.class));
+        } else {
+            throw new RuntimeException(format("Table %s has %s datatype. Countable calculation can not be performed!", table, type));
+        }
     }
 }

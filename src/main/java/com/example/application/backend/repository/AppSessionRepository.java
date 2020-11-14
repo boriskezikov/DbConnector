@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface AppSessionRepository extends JpaRepository<SpringSession, String> {
 
     Optional<SpringSession> findBySessionId(String sessionId);
+    boolean existsBySessionId(String sessionId);
 }

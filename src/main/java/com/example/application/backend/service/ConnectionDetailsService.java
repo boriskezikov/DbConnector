@@ -9,6 +9,7 @@ import com.example.application.backend.mapper.ConnectionDetailsMapper;
 import com.example.application.backend.repository.AppSessionRepository;
 import com.example.application.backend.repository.ConnectionDetailsRepository;
 import com.example.application.backend.repository.ConnectionsRepository;
+import com.example.application.backend.utils.UtilService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

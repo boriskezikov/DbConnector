@@ -76,7 +76,6 @@ public class PGColumn {
         private Integer min;
         private Integer max;
         private Integer avg;
-        private Integer median;
     }
 
 }

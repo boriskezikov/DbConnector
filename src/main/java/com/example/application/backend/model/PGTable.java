@@ -70,8 +70,8 @@ public class PGTable {
     @NoArgsConstructor
     @Builder
     public static class Statistics {
-        private Integer recordsCount;
-        private Integer attributesCount;
+        private Integer cols;
+        private Integer rows;
     }
 
 

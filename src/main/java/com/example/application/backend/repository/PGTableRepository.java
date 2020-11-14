@@ -14,6 +14,15 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.example.application.backend.utils.SQLConstants.SELECT_ALL_TABLES_COUNT_ROWS_SQL;
+import static com.example.application.backend.utils.SQLConstants.SELECT_ALL_TABLES_SQL;
+import static com.example.application.backend.utils.SQLConstants.SELECT_COLS_FOR_TABLE_SQL;
+import static com.example.application.backend.utils.SQLConstants.SELECT_TABLE_STATISTICS;
+import static com.example.application.backend.utils.SQLConstants.SELECT_USER_TABLES_COUNT_ROWS_SQL;
+import static com.example.application.backend.utils.SQLConstants.SELECT_USER_TABLES_SQL;
+import static java.lang.String.format;
+
+@SuppressWarnings("ConstantConditions")
 @Slf4j
 @Repository(value = "PGTable")
 @RequiredArgsConstructor
@@ -21,39 +30,14 @@ public class PGTableRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
-    private static final String SELECT_USER_TABLES_SQL = "select *\n" +
-            "from information_schema.tables as t\n" +
-            "         join pg_stat_user_tables as st on st.schemaname = t.table_schema and st.relname = t.table_name\n" +
-            "         join pg_statio_user_tables as sto on sto.schemaname = t.table_schema and sto.relname = t.table_name\n" +
-            "where t.table_schema not in ('pg_catalog', 'information_schema')" +
-            "limit ? offset ?;";
-
-    private static final String SELECT_USER_TABLES_COUNT_ROWS = "select count(1)\n" +
-            "from information_schema.tables as t\n" +
-            "         join pg_stat_user_tables as st on st.schemaname = t.table_schema and st.relname = t.table_name\n" +
-            "         join pg_statio_user_tables as sto on sto.schemaname = t.table_schema and sto.relname = t.table_name\n" +
-            "where t.table_schema not in ('pg_catalog', 'information_schema');";
-
-    private static final String SELECT_ALL_TABLES_COUNT_ROWS = "select count(1)\n" +
-            "from information_schema.tables as t\n" +
-            "         join pg_stat_user_tables as st on st.schemaname = t.table_schema and st.relname = t.table_name\n" +
-            "         join pg_statio_user_tables as sto on sto.schemaname = t.table_schema and sto.relname = t.table_name;";
-
-    private static final String SELECT_ALL_TABLES_SQL = "select * from information_schema.tables as t\n" +
-            "          left join pg_stat_user_tables as st on t.table_schema = st.schemaname and t.table_name = st.relname\n" +
-            "          left join pg_statio_user_tables as sto on t.table_schema = sto.schemaname and t.table_name = sto.relname" +
-            "          limit ? offset ?   ;";
-
-    private static final String SELECT_COLS_FOR_TABLE_SQL = "SELECT * FROM INFORMATION_SCHEMA.COLUMNS";
-
     public Page<PGTable> listTables(boolean onlyUserTables, Pageable pageable) {
         int count;
         List<PGTable> tables;
         if (onlyUserTables) {
-            count = jdbcTemplate.queryForObject(SELECT_USER_TABLES_COUNT_ROWS, Integer.class);
+            count = jdbcTemplate.queryForObject(SELECT_USER_TABLES_COUNT_ROWS_SQL, Integer.class);
             tables = jdbcTemplate.query(SELECT_USER_TABLES_SQL, new Object[]{pageable.getPageSize(), pageable.getOffset()}, new BeanPropertyRowMapper<>(PGTable.class));
         } else {
-            count = jdbcTemplate.queryForObject(SELECT_ALL_TABLES_COUNT_ROWS, Integer.class);
+            count = jdbcTemplate.queryForObject(SELECT_ALL_TABLES_COUNT_ROWS_SQL, Integer.class);
             tables = jdbcTemplate.query(SELECT_ALL_TABLES_SQL, new Object[]{pageable.getPageSize(), pageable.getOffset()}, new BeanPropertyRowMapper<>(PGTable.class));
         }
         List<PGColumn> res = jdbcTemplate.query(SELECT_COLS_FOR_TABLE_SQL, new BeanPropertyRowMapper<>(PGColumn.class));
@@ -65,9 +49,8 @@ public class PGTableRepository {
         return new PageImpl<>(tables, pageable, count);
     }
 
-    public List<PGTable.Statistics> statistics() {
-        return null;
+    public PGTable.Statistics statistics(String table, String schema) {
+        String sql = format(SELECT_TABLE_STATISTICS, schema, table, schema, table);
+        return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(PGTable.Statistics.class));
     }
-
-
 }

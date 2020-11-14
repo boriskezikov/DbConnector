@@ -15,11 +15,11 @@ public class BackgroundOperationsService {
     private final ConnectionsRepository connectionsRepository;
     private final AppSessionRepository sessionRepository;
 
-    @Scheduled(cron = "0/15 0 0 ? * * ")
+    @Scheduled(fixedDelay = 15000)
     public void clearAllForExpiredSessions() {
         log.info("Starting background storage cleaning operation");
         connectionsRepository.findAll().forEach(connection -> {
-            if (!sessionRepository.existsById(connection.getSession())) {
+            if (!sessionRepository.existsBySessionId(connection.getSession())) {
                 connectionsRepository.delete(connection);
                 log.warn("Connection {} and details for expired session {} erased", connection.getId(), connection.getSession());
             }

@@ -10,14 +10,14 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+import static com.example.application.backend.utils.SQLConstants.SELECT_SCHEMAS_SQL;
+
 @Slf4j
 @Repository(value = "PGSchema")
 @RequiredArgsConstructor
 public class PGSchemaRepository {
 
     private final JdbcTemplate jdbcTemplate;
-
-    private static final String SELECT_SCHEMAS_SQL = "SELECT * FROM information_schema.schemata;";
 
     public List<PGSchema> listSchemas() {
         return jdbcTemplate.query(SELECT_SCHEMAS_SQL, new BeanPropertyRowMapper<>(PGSchema.class));
