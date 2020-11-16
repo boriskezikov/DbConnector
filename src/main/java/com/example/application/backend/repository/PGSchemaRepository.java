@@ -22,8 +22,4 @@ public class PGSchemaRepository {
     public List<PGSchema> listSchemas() {
         return jdbcTemplate.query(SELECT_SCHEMAS_SQL, new BeanPropertyRowMapper<>(PGSchema.class));
     }
-
-    public List<PGSchema.Statistics> statistics() {
-        return null;
-    }
 }
