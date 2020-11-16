@@ -30,7 +30,7 @@ public class GlobalExceptionHandler {
 
     @ResponseBody
     @ExceptionHandler(value = {IOException.class})
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     protected ApiErrorDTO handleApiException(IOException ex) {
         return new ApiErrorDTO(400, ex.getClass().getName(), ex.getMessage());
     }
