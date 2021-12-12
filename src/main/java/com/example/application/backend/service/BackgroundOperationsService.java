@@ -15,6 +15,7 @@ public class BackgroundOperationsService {
     private final ConnectionsRepository connectionsRepository;
     private final AppSessionRepository sessionRepository;
 
+    //test2
     @Scheduled(fixedDelay = 15000)
     public void clearAllForExpiredSessions() {
         log.info("Starting background storage cleaning operation");

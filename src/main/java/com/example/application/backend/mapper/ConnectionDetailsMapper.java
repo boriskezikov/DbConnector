@@ -20,6 +20,7 @@ public interface ConnectionDetailsMapper {
 
     GetConnectionDetailsDTO entityToGetDto(ConnectionDetails source);
 
+    //test2
     void updateEntityFromDto(UpdateConnectionDetailsDTO source, @MappingTarget ConnectionDetails target);
 
 }
