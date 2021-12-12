@@ -51,6 +51,7 @@ public class BrowsingService {
         return pgTableRepository.listTables(onlyUserTables, pageable);
     }
 
+    //test4
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public List<PGSchema> listSchemas(BigInteger detailsId) {
         establishConnection(detailsId);
@@ -64,6 +65,7 @@ public class BrowsingService {
         return pgColumnRepository.listColumns(pageable);
     }
 
+    //test4
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public PGColumn.Statistics listColumnsStat(String column, String table, BigInteger detailsId) {
         var details = establishConnection(detailsId);
