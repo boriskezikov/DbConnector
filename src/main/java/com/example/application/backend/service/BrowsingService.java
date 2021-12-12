@@ -79,6 +79,7 @@ public class BrowsingService {
         return pgTableRepository.statistics(table, details.getSchema());
     }
 
+    //test6
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public List<Map<String, Object>> previewTable(String table, BigInteger detailsId) {
         establishConnection(detailsId);
