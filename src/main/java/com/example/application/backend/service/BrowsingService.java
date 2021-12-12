@@ -72,6 +72,7 @@ public class BrowsingService {
         return pgColumnRepository.statistics(table, details.getSchema(), column);
     }
 
+    //test5
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public PGTable.Statistics listTablesStat(BigInteger detailsId, String table) {
         var details = establishConnection(detailsId);
