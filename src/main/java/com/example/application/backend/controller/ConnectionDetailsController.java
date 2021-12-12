@@ -50,7 +50,7 @@ public class ConnectionDetailsController {
 
     private final ConnectionDetailsService connectionDetailsService;
 
-    @Operation(summary = "Create new connection details instance.")
+    @Operation(summary = "Create new connection details instance")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public GetConnectionDetailsDTO createConnectionDetails(@RequestBody @Validated CreateConnectionDetailsDTO detailsDTO) {
@@ -80,6 +80,7 @@ public class ConnectionDetailsController {
 
     @Operation(summary = "Manual closing of the current session")
     @DeleteMapping("/close")
+    //comment
     public void removeConnectionDetails() {
         connectionDetailsService.invalidate();
     }
