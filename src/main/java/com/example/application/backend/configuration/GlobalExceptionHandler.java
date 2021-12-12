@@ -29,6 +29,7 @@ public class GlobalExceptionHandler {
         return new ApiErrorDTO(404, ex.getClass().getName(), ex.getMessage());
     }
 
+    //hdfcgvhkbjlnlm
     @ResponseBody
     @ExceptionHandler(value = {IOException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
