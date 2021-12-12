@@ -44,6 +44,7 @@ public class BrowsingService {
     private final PGColumnRepository pgColumnRepository;
     private final PGPreviewRepository PGPreviewRepository;
 
+    //test3
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public Page<PGTable> listTables(BigInteger detailsId, boolean onlyUserTables, Pageable pageable) {
         establishConnection(detailsId);
@@ -56,6 +57,7 @@ public class BrowsingService {
         return pgSchemaRepository.listSchemas();
     }
 
+    //test3
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public Page<PGColumn> listColumns(BigInteger detailsId, Pageable pageable) {
         establishConnection(detailsId);
