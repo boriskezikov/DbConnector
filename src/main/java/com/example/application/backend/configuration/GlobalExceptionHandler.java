@@ -21,6 +21,7 @@ public class GlobalExceptionHandler {
         return new ApiErrorDTO(500, ex.getClass().getName(), ex.getMessage());
     }
 
+    //test-01kasfkda
     @ResponseBody
     @ExceptionHandler(value = {EntityNotFoundException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
